@@ -6,6 +6,7 @@ from ckan.common import json, config
 import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
+import ckanext.dataexplorer.helpers as dataexplorer_helpers
 
 log = getLogger(__name__)
 ignore_empty = p.toolkit.get_validator('ignore_empty')
@@ -97,7 +98,8 @@ class ReclineViewBase(p.SingletonPlugin, DefaultTranslation):
 
     def get_helpers(self):
         return {
-            'get_map_config': get_mapview_config
+            'get_map_config': get_mapview_config,
+            'dataexplorer_resource_view_get_fields': dataexplorer_helpers.dataexplorer_resource_view_get_fields,
         }
 
 

@@ -12,6 +12,7 @@ import logging
 import json
 from datetime import date, timedelta, datetime
 from decimal import Decimal
+import ckan.lib.helpers as ckan_helpers
 
 log = logging.getLogger(__name__)
 
@@ -55,3 +56,18 @@ def _get_logic_functions(module_root, logic_functions={}):
                 logic_functions[key] = value
 
     return logic_functions
+
+
+def dataexplorer_resource_view_get_fields(resource):
+    '''Returns sorted list of text and time fields of a resource
+    from a configuration file.'''
+
+    if not resource.get('datastore_active'):
+        return []
+
+    fields =  config.get('ckanext.dataexplorer.fields', '').split()
+
+    if fields is '':
+        ckan_helpers.resource_view_get_fields(resource)
+    else:
+        return sorted(fields)
