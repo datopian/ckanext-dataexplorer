@@ -49,7 +49,8 @@ class DataExplorer(base.BaseController):
             name =  resource_meta.get('name', "extract").replace(' ', '_')
 
             try:
-                resource_data = self._get_action('datastore_search', data)
+                import ckanext.nhs.action as nhs_action
+                resource_data = self._get_action('nhs_action.datastore_search', data)
 
                 for key in resource_data['fields']:
                     columns.append(key['id'])

@@ -42,7 +42,7 @@ if (isNodeModule) {
   // Primarily for use by Recline backend below
   my.Client.prototype.datastoreQuery = function(queryObj, cb) {
     var actualQuery = my._normalizeQuery(queryObj);
-    this.action('datastore_search', actualQuery, function(err, results) {
+    this.action('nhs_datastore_search', actualQuery, function(err, results) {
       // map ckan types to our usual types ...
       var fields = _.map(results.result.fields, function(field) {
         field.type = field.type in my.ckan2JsonTableSchemaTypes ? my.ckan2JsonTableSchemaTypes[field.type] : field.type;
@@ -67,7 +67,7 @@ if (isNodeModule) {
     'bool': 'boolean',
   };
 
-  // 
+  //
   my.jsonTableSchema2CkanTypes = {
     'string': 'text',
     'number': 'float',
@@ -85,7 +85,7 @@ if (isNodeModule) {
     var data = {
       resource_id: '_table_metadata'
     };
-    return this._client.action('datastore_search', data, cb);
+    return this._client.action('nhs_datastore_search', data, cb);
   };
 
   // Utilities

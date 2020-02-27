@@ -48,10 +48,15 @@ def datastore_fields(resource, valid_field_types):
     :param valid_field_types: field types to include in returned list
     :type valid_field_types: list of strings
     '''
-    data = {'resource_id': resource['id'], 'limit': 0}
-    fields = toolkit.get_action('datastore_search')({}, data)['fields']
-    return [{'value': f['id'], 'text': f['id']} for f in fields
-            if f['type'] in valid_field_types]
+    if not resource.get('datastore_active'):
+        return []
+
+    fields =  config.get('ckanext.dataexplorer.fields', '').split()
+
+    if fields is '':
+        ckan_helpers.resource_view_get_fields(resource)
+    else:
+        return sorted(fields)
 
 
 class ReclineViewBase(p.SingletonPlugin, DefaultTranslation):
